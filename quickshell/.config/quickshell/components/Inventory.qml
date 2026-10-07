@@ -9,10 +9,10 @@ Item {
     signal requestClose()
     signal requestSettings()
 
-    // 40 slots: 4 rows x 10 cols
-    readonly property int totalSlots: 40
+    // 50 slots: 5 rows x 10 cols matching in-game Terraria inventory
+    readonly property int totalSlots: Theme.inventoryTotalSlots
 
-    // Top-Left: Inventory App Grid ("Show all items (apps)")
+    // Top-Left: Inventory App Grid (5 rows x 10 cols)
     Rectangle {
         id: inventoryPanel
         anchors.left: parent.left
@@ -30,8 +30,8 @@ Item {
         Grid {
             id: grid
             anchors.centerIn: parent
-            columns: 10
-            rows: 4
+            columns: Theme.inventoryCols
+            rows: Theme.inventoryRows
             spacing: Theme.spacing
 
             Repeater {
@@ -101,12 +101,12 @@ Item {
         }
     }
 
-    // Bottom-Right: Vertical Accessories Column ("can choose the performance to show") + Settings ("go to setting")
+    // Vertically Centered on Right Side: Accessories Column
     Rectangle {
         id: accessoryPanel
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.margins: Theme.panelPadding * 2
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: Theme.panelPadding * 4
 
         implicitWidth: accCol.implicitWidth + Theme.panelPadding * 2
         implicitHeight: accCol.implicitHeight + Theme.panelPadding * 2
@@ -151,36 +151,36 @@ Item {
                     }
                 }
             }
+        }
+    }
 
-            Item {
-                width: 1
-                height: Theme.spacing
-            }
+    // Bottom-Right Corner: Standalone Settings Button ("go to setting")
+    Rectangle {
+        id: settingsBtn
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: Theme.panelPadding * 2
 
-            // Settings Button ("go to setting")
-            Rectangle {
-                id: settingsBtn
-                width: Theme.accessorySlotSize + Theme.panelPadding * 2
-                height: Theme.buttonHeight
-                radius: Theme.panelRadius
-                color: Theme.buttonBackground
-                border.color: Theme.panelBorder
-                border.width: Theme.borderWidth
+        implicitWidth: settingsLabel.implicitWidth + Theme.panelPadding * 4
+        implicitHeight: Theme.buttonHeight
+        radius: Theme.panelRadius
+        color: Theme.buttonBackground
+        border.color: Theme.panelBorder
+        border.width: Theme.borderWidth
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "Settings"
-                    color: Theme.text
-                    font.family: Theme.fontFamily
-                    font.pixelSize: Theme.fontSizeSmall
-                }
+        Text {
+            id: settingsLabel
+            anchors.centerIn: parent
+            text: "Settings"
+            color: Theme.text
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeSmall
+        }
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.requestSettings()
-                }
-            }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.requestSettings()
         }
     }
 }

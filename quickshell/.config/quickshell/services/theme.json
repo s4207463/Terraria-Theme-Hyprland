@@ -38,6 +38,11 @@
     "accessorySlotCount": 5,
     "searchBarWidth": 420,
     "searchBarHeight": 36,
+    "infoIconSize": 20,
+    "infoIconSpacing": 4,
+    "inventoryRows": 5,
+    "inventoryCols": 10,
+    "inventoryTotalSlots": 50,
     "buttonHeight": 32
   }
 }

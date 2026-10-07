@@ -55,6 +55,15 @@ QtObject {
     readonly property int searchBarWidth: 420
     readonly property int searchBarHeight: 36
 
+    // Info performance icon tokens (compact mode)
+    readonly property int infoIconSize: 20
+    readonly property int infoIconSpacing: 4
+
+    // Inventory grid tokens (5 rows x 10 cols = 50 slots matching in-game layout)
+    readonly property int inventoryRows: 5
+    readonly property int inventoryCols: 10
+    readonly property int inventoryTotalSlots: 50
+
     // Button tokens
     readonly property int buttonHeight: 32
     readonly property color buttonBackground: "#313244"

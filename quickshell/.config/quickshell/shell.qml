@@ -66,6 +66,7 @@ ShellRoot {
 
             InfoPanel {
                 anchors.right: parent.right
+                compact: root.inventoryOpen
             }
         }
     }
