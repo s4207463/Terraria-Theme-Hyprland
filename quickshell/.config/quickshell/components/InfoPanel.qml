@@ -2,29 +2,24 @@ import QtQuick
 import "../services"
 
 // InfoPanel: Performance and environment readouts (DESIGN.md 3.1 & 3.3)
-// Normal mode: Text readouts inside a panel box.
-// Compact mode: Seamless horizontal row of icons directly beneath the Minimap (matching in-game reference).
-Rectangle {
+// Normal mode: Clean text readouts left-aligned directly under the Minimap (matching in-game HUD).
+// Compact mode: Seamless horizontal row of icons directly beneath the Minimap (when inventory opens).
+Item {
     id: root
 
     property bool compact: false
 
     implicitWidth: compact
         ? iconRow.implicitWidth
-        : (textCol.implicitWidth + Theme.panelPadding * 2)
+        : Theme.minimapWidth
     implicitHeight: compact
         ? iconRow.implicitHeight
-        : (textCol.implicitHeight + Theme.panelPadding * 2)
+        : textCol.implicitHeight
 
-    color: compact ? "transparent" : Theme.panel
-    border.color: compact ? "transparent" : Theme.panelBorder
-    border.width: compact ? 0 : Theme.borderWidth
-    radius: Theme.panelRadius
-
-    // 1. Compact Mode: Row of circular/square icons directly hugging the Minimap
+    // 1. Compact Mode: Row of circular icons directly hugging the Minimap
     Row {
         id: iconRow
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         spacing: Theme.infoIconSpacing
         visible: root.compact
 
@@ -62,10 +57,12 @@ Rectangle {
         }
     }
 
-    // 2. Normal Mode: Full text readout column
+    // 2. Normal Mode: Clean text readout column aligned under the Minimap
     Column {
         id: textCol
-        anchors.centerIn: parent
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.panelPadding
+        anchors.right: parent.right
         spacing: Theme.spacing
         visible: !root.compact
 

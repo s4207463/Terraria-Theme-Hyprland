@@ -18,23 +18,37 @@ Item {
     property alias settingsBtn: settingsBtn
 
     // Top-Left: Inventory App Grid (5 rows x 10 cols)
-    Rectangle {
+    Column {
         id: inventoryPanel
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: Theme.panelPadding * 2
+        anchors.leftMargin: Theme.panelPadding
+        anchors.topMargin: Theme.panelPadding
+        spacing: Theme.spacing
 
-        implicitWidth: grid.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: grid.implicitHeight + Theme.panelPadding * 2
+        Text {
+            anchors.left: gridBox.left
+            anchors.leftMargin: Theme.panelPadding
+            text: "Inventory"
+            color: Theme.text
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeSmall
+            font.bold: true
+        }
 
-        color: Theme.panel
-        border.color: Theme.panelBorder
-        border.width: Theme.borderWidth
-        radius: Theme.panelRadius
+        Rectangle {
+            id: gridBox
+            implicitWidth: grid.implicitWidth + Theme.panelPadding * 2
+            implicitHeight: grid.implicitHeight + Theme.panelPadding * 2
 
-        Grid {
-            id: grid
-            anchors.centerIn: parent
+            color: Theme.panel
+            border.color: Theme.panelBorder
+            border.width: Theme.borderWidth
+            radius: Theme.panelRadius
+
+            Grid {
+                id: grid
+                anchors.centerIn: parent
             columns: Theme.inventoryCols
             rows: Theme.inventoryRows
             spacing: Theme.spacing
@@ -71,6 +85,7 @@ Item {
             }
         }
     }
+}
 
     // Center: Search Bar ("Search bar in the middle")
     Rectangle {

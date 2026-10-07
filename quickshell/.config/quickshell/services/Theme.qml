@@ -51,7 +51,7 @@ QtObject {
     readonly property color manaEmptyColor: "#313244"
 
     // Minimap tokens
-    readonly property int minimapWidth: 130
+    readonly property int minimapWidth: 150
     readonly property int minimapHeight: 120
 
     // Accessory tokens (3 columns x 9 rows matching in-game equipment layout)

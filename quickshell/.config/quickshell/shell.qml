@@ -31,13 +31,17 @@ ShellRoot {
         anchors.top: true
         anchors.left: true
         color: "transparent"
+        visible: !root.inventoryOpen
 
-        implicitWidth: hotbar.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: hotbar.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: hotbar.implicitWidth + Theme.panelPadding * 3
+        implicitHeight: hotbar.implicitHeight + Theme.panelPadding * 3
 
         Hotbar {
             id: hotbar
-            anchors.centerIn: parent
+            anchors.left: parent.left
+            anchors.leftMargin: Theme.panelPadding
+            anchors.top: parent.top
+            anchors.topMargin: Theme.panelPadding
         }
     }
 
@@ -48,13 +52,16 @@ ShellRoot {
         anchors.right: true
         color: "transparent"
 
-        implicitWidth: hudRow.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: hudRow.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: hudRow.implicitWidth + Theme.panelPadding * 3
+        implicitHeight: hudRow.implicitHeight + Theme.panelPadding * 3
 
         Row {
             id: hudRow
-            anchors.centerIn: parent
-            spacing: Theme.spacing
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.panelPadding
+            anchors.top: parent.top
+            anchors.topMargin: Theme.panelPadding
+            spacing: Theme.spacing * 2
 
             Column {
                 spacing: Theme.hudSpacing

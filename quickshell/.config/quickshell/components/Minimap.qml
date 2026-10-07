@@ -37,5 +37,34 @@ Item {
                 font.pixelSize: Theme.fontSizeSmall
             }
         }
+
+        // Bottom control buttons: [-], [=], [+] matching Terraria minimap frame
+        Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.panelPadding / 2
+            spacing: Theme.spacing
+
+            Repeater {
+                model: ["-", "=", "+"]
+                delegate: Rectangle {
+                    required property string modelData
+                    width: 14
+                    height: 14
+                    radius: 7
+                    color: Theme.buttonBackground
+                    border.color: Theme.panelBorder
+                    border.width: 1
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: modelData
+                        color: Theme.textDim
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fontSizeSmall - 2
+                    }
+                }
+            }
+        }
     }
 }

@@ -8,37 +8,53 @@ Item {
     property int manaPercent: 100 // 0-100 percentage
     readonly property int totalStars: Theme.manaTotalStars
 
-    implicitWidth: starCol.implicitWidth
-    implicitHeight: starCol.implicitHeight
+    implicitWidth: Math.max(starCol.implicitWidth, manaLabel.implicitWidth)
+    implicitHeight: col.implicitHeight
 
     Column {
-        id: starCol
+        id: col
         anchors.centerIn: parent
-        spacing: Theme.manaStarSpacing
+        spacing: Theme.spacing
 
-        Repeater {
-            model: root.totalStars
-            delegate: Rectangle {
-                id: starBox
-                required property int index
+        Text {
+            id: manaLabel
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Mana"
+            color: Theme.mana
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeSmall
+            font.bold: true
+        }
 
-                width: Theme.manaStarSize
-                height: Theme.manaStarSize
-                radius: 2
+        Column {
+            id: starCol
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: Theme.manaStarSpacing
 
-                // Each star represents 10% of mana
-                readonly property bool isFilled: ((starBox.index + 1) * 10) <= root.manaPercent
+            Repeater {
+                model: root.totalStars
+                delegate: Rectangle {
+                    id: starBox
+                    required property int index
 
-                color: isFilled ? Theme.manaColor : Theme.manaEmptyColor
-                border.color: Theme.panelBorder
-                border.width: 1
+                    width: Theme.manaStarSize
+                    height: Theme.manaStarSize
+                    radius: 2
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "★"
-                    color: starBox.isFilled ? Theme.highlight : Theme.textDim
-                    font.family: Theme.fontFamily
-                    font.pixelSize: Theme.fontSizeSmall
+                    // Each star represents 10% of mana
+                    readonly property bool isFilled: ((starBox.index + 1) * 10) <= root.manaPercent
+
+                    color: isFilled ? Theme.manaColor : Theme.manaEmptyColor
+                    border.color: Theme.panelBorder
+                    border.width: 1
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "★"
+                        color: starBox.isFilled ? Theme.highlight : Theme.textDim
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fontSizeSmall
+                    }
                 }
             }
         }
