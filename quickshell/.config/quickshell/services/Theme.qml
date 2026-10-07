@@ -47,9 +47,12 @@ QtObject {
     readonly property int minimapWidth: 160
     readonly property int minimapHeight: 120
 
-    // Accessory tokens
-    readonly property int accessorySlotSize: 36
-    readonly property int accessorySlotCount: 5
+    // Accessory tokens (3 columns x 9 rows matching in-game equipment layout)
+    readonly property int accessorySlotSize: 32
+    readonly property int accessoryCols: 3
+    readonly property int accessoryRows: 9
+    readonly property int accessorySpacing: 4
+    readonly property int accessoryTotalSlots: 27
 
     // Search bar tokens
     readonly property int searchBarWidth: 420
