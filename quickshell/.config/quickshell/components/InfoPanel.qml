@@ -9,17 +9,16 @@ Item {
 
     property bool compact: false
 
-    implicitWidth: compact
-        ? iconRow.implicitWidth
-        : Theme.minimapWidth
+    implicitWidth: Theme.minimapWidth
     implicitHeight: compact
         ? iconRow.implicitHeight
         : textCol.implicitHeight
 
-    // 1. Compact Mode: Row of circular icons directly hugging the Minimap
+    // 1. Compact Mode: Row of circular icons aligned on the left below the map
     Row {
         id: iconRow
-        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.panelPadding
         spacing: Theme.infoIconSpacing
         visible: root.compact
 
