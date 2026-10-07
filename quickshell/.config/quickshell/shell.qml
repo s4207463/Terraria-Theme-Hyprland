@@ -32,42 +32,12 @@ ShellRoot {
         anchors.left: true
         color: "transparent"
 
-        implicitWidth: hotbarLayout.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: hotbarLayout.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: hotbar.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: hotbar.implicitHeight + Theme.panelPadding * 2
 
-        Row {
-            id: hotbarLayout
+        Hotbar {
+            id: hotbar
             anchors.centerIn: parent
-            spacing: Theme.spacing
-
-            Hotbar {
-                id: hotbar
-            }
-
-            // Quick click toggle for testing without keybinds
-            Rectangle {
-                width: Theme.slotSize
-                height: Theme.slotSize
-                color: Theme.buttonBackground
-                border.color: Theme.panelBorder
-                border.width: Theme.borderWidth
-                radius: Theme.panelRadius
-
-                Text {
-                    anchors.centerIn: parent
-                    text: root.inventoryOpen ? "✕" : "INV"
-                    color: Theme.accent
-                    font.family: Theme.fontFamily
-                    font.pixelSize: Theme.fontSizeSmall
-                    font.bold: true
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.inventoryOpen = !root.inventoryOpen
-                }
-            }
         }
     }
 
