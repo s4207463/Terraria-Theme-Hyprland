@@ -80,26 +80,31 @@ ShellRoot {
         }
     }
 
-    // INVENTORY OVERLAY (Toggled by Super / IPC / INV button)
+    // INVENTORY OVERLAY (Toggled by Super / IPC)
+    // Non-modal and transparent: does not block the map, desktop, or windows behind it.
     PanelWindow {
         id: overlayWindow
         anchors.top: true
         anchors.bottom: true
         anchors.left: true
         anchors.right: true
-        color: Theme.overlayBackground
+        color: "transparent"
 
         visible: root.inventoryOpen
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.keyboardFocus: root.inventoryOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
-        // Dismiss when clicking on empty background
-        MouseArea {
-            anchors.fill: parent
-            onClicked: root.inventoryOpen = false
+        // Input mask: ONLY the actual panels receive clicks.
+        // Transparent areas pass all clicks straight through to windows/games behind!
+        mask: Region {
+            Region { item: inventoryComp.inventoryPanel }
+            Region { item: inventoryComp.searchBarContainer }
+            Region { item: inventoryComp.accessoryPanel }
+            Region { item: inventoryComp.settingsBtn }
         }
 
         Inventory {
+            id: inventoryComp
             anchors.fill: parent
             onRequestClose: root.inventoryOpen = false
             onRequestSettings: console.log("[TerrariaShell] Settings clicked")

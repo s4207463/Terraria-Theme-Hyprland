@@ -12,6 +12,12 @@ Item {
     // 50 slots: 5 rows x 10 cols matching in-game Terraria inventory
     readonly property int totalSlots: Theme.inventoryTotalSlots
 
+    // Exposed panel items for window input region masking
+    property alias inventoryPanel: inventoryPanel
+    property alias searchBarContainer: searchBarContainer
+    property alias accessoryPanel: accessoryPanel
+    property alias settingsBtn: settingsBtn
+
     // Top-Left: Inventory App Grid (5 rows x 10 cols)
     Rectangle {
         id: inventoryPanel
