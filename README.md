@@ -12,8 +12,8 @@ The project follows a strict three-phase build order:
 3. **Phase 3: Integration** – Skinning Phase 1 features with Phase 2 visuals and themes.
 
 For full rules and architecture details, refer to:
-- [`DESIGN.md`](./DESIGN.md) (or [`ruleset/DESIGN.md`](./ruleset/DESIGN.md))
-- [`RULES.md`](./RULES.md) (or [`ruleset/RULES.md`](./ruleset/RULES.md))
+- [`DESIGN.md`](./DESIGN.md)
+- [`RULES.md`](./RULES.md)
 
 ---
 
