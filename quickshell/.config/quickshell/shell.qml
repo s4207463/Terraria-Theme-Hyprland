@@ -8,7 +8,7 @@ import "./components"
 ShellRoot {
     id: root
 
-    // Controls whether Inventory overlay is active (Super tap or INV button)
+    // Controls whether Inventory overlay is active (Super / Alt / F1 / IPC)
     property bool inventoryOpen: false
 
     // IPC handler for keybinds: `qs ipc call inventory toggle`
@@ -25,43 +25,47 @@ ShellRoot {
         }
     }
 
-    // NORMAL SCREEN: Top-Left Hotbar & Inventory Grid Window
+    // Single unified fullscreen window:
+    // Permanently mapped, never resizes, never remaps.
+    // Toggling inventory is a pure 0ms frame-flip with zero compositor animations/effects, exactly like Terraria!
     PanelWindow {
-        id: hotbarWindow
+        id: shellWindow
         anchors.top: true
+        anchors.bottom: true
         anchors.left: true
+        anchors.right: true
         color: "transparent"
-        visible: true // Always visible - slots 1..10 never unmap or move
+        visible: true
 
-        implicitWidth: hotbar.implicitWidth + Theme.panelPadding * 3
-        implicitHeight: hotbar.implicitHeight + Theme.panelPadding * 3
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: root.inventoryOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
+        // Input mask: ONLY the interactive UI panels intercept clicks.
+        // Transparent areas pass 100% of mouse clicks straight through to games/windows behind!
+        mask: Region {
+            Region { item: hotbar }
+            Region { item: hudRow }
+            Region { item: root.inventoryOpen ? inventoryOverlay.searchBarContainer : null }
+            Region { item: root.inventoryOpen ? inventoryOverlay.settingsBtn : null }
+        }
+
+        // TOP-LEFT: Hotbar & Expanded Inventory Grid (Hotbar slots 1..10 never move or unmap)
         Hotbar {
             id: hotbar
             anchors.left: parent.left
-            anchors.leftMargin: Theme.panelPadding
+            anchors.leftMargin: Theme.panelPadding * 2
             anchors.top: parent.top
-            anchors.topMargin: Theme.panelPadding
+            anchors.topMargin: Theme.panelPadding * 2
             expanded: root.inventoryOpen
         }
-    }
 
-    // NORMAL SCREEN: Top-Right HUD Window (Hearts, Minimap, InfoPanel, Mana)
-    PanelWindow {
-        id: hudWindow
-        anchors.top: true
-        anchors.right: true
-        color: "transparent"
-
-        implicitWidth: hudRow.implicitWidth + Theme.panelPadding * 3
-        implicitHeight: hudRow.implicitHeight + Theme.panelPadding * 3
-
+        // TOP-RIGHT: HUD Stack (Hearts, Minimap, InfoPanel, Accessories, Mana)
         Row {
             id: hudRow
             anchors.right: parent.right
-            anchors.rightMargin: Theme.panelPadding
+            anchors.rightMargin: Theme.panelPadding * 2
             anchors.top: parent.top
-            anchors.topMargin: Theme.panelPadding
+            anchors.topMargin: Theme.panelPadding * 2
             spacing: Theme.spacing * 2
 
             Column {
@@ -80,7 +84,7 @@ ShellRoot {
                     compact: root.inventoryOpen
                 }
 
-                // 3x9 Equipment & Accessories Grid directly under InfoPanel (visible when inventory is open)
+                // 3x9 Accessories grid appears instantaneously under InfoPanel when inventory is open
                 AccessoryPanel {
                     anchors.right: parent.right
                     visible: root.inventoryOpen
@@ -93,32 +97,12 @@ ShellRoot {
                 anchors.top: parent.top
             }
         }
-    }
 
-    // INVENTORY OVERLAY (Toggled by Super / IPC)
-    // Non-modal and transparent: does not block the map, desktop, or windows behind it.
-    PanelWindow {
-        id: overlayWindow
-        anchors.top: true
-        anchors.bottom: true
-        anchors.left: true
-        anchors.right: true
-        color: "transparent"
-
-        visible: root.inventoryOpen
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.keyboardFocus: root.inventoryOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
-
-        // Input mask: ONLY the actual panels receive clicks.
-        // Transparent areas pass all clicks straight through to windows/games behind!
-        mask: Region {
-            Region { item: inventoryComp.searchBarContainer }
-            Region { item: inventoryComp.settingsBtn }
-        }
-
+        // OVERLAY ELEMENTS: Search Bar & Settings Button (only visible when inventory is open)
         Inventory {
-            id: inventoryComp
+            id: inventoryOverlay
             anchors.fill: parent
+            visible: root.inventoryOpen
             onRequestClose: root.inventoryOpen = false
             onRequestSettings: console.log("[TerrariaShell] Settings clicked")
         }
