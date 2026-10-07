@@ -44,7 +44,7 @@ ShellRoot {
         // Transparent areas pass 100% of mouse clicks straight through to games/windows behind!
         mask: Region {
             Region { item: hotbar }
-            Region { item: hudRow }
+            Region { item: hudCol }
             Region { item: accessoryPanel }
             Region { item: inventoryOverlay.searchBarContainer }
             Region { item: inventoryOverlay.settingsBtn }
@@ -60,37 +60,27 @@ ShellRoot {
             expanded: root.inventoryOpen
         }
 
-        // TOP-RIGHT: HUD Stack (Hearts, Minimap, InfoPanel, Mana) - exactly ~1/3 vertical height
-        Row {
-            id: hudRow
+        // TOP-RIGHT: HUD Stack (Health/Mana Bar, Minimap, InfoPanel) - ~1/3 vertical height
+        Column {
+            id: hudCol
             anchors.right: parent.right
             anchors.rightMargin: Theme.panelPadding * 2
             anchors.top: parent.top
             anchors.topMargin: Theme.panelPadding * 2
-            spacing: Theme.spacing * 2
+            width: Math.max(Theme.healthBarWidth, Theme.minimapWidth)
+            spacing: Theme.hudSpacing
 
-            Column {
-                width: Theme.minimapWidth
-                spacing: Theme.hudSpacing
-
-                Hearts {
-                    anchors.right: parent.right
-                }
-
-                Minimap {
-                    anchors.right: parent.right
-                }
-
-                InfoPanel {
-                    anchors.right: parent.right
-                    compact: root.inventoryOpen
-                }
+            Hearts {
+                anchors.right: parent.right
             }
 
-            // Far right edge: Vertical Mana Star Column
-            Mana {
-                id: manaBar
-                anchors.top: parent.top
+            Minimap {
+                anchors.right: parent.right
+            }
+
+            InfoPanel {
+                anchors.right: parent.right
+                compact: root.inventoryOpen
             }
         }
 

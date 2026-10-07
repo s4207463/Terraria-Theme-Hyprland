@@ -62,8 +62,19 @@ QtObject {
     readonly property int accessorySpacing: 4
     readonly property int accessoryTotalSlots: 27
 
+    // Health & Mana Bar tokens (Bar HUD style from Terraria)
+    readonly property int healthBarWidth: 250
+    readonly property int healthBarHeight: 18
+    readonly property int manaBarWidth: 155
+    readonly property int manaBarHeight: 14
+    readonly property int barBadgeSize: 26
+    readonly property int manaBadgeSize: 22
+    readonly property int batterySegmentsTotal: 20
+    readonly property int manaSegmentsTotal: 10
+    readonly property color barBorder: "#d4af37"
+
     // Settings button alignment to match accessories right edge
-    readonly property int settingsRightMargin: panelPadding + manaStarSize + spacing * 3
+    readonly property int settingsRightMargin: panelPadding * 2
 
     // Search bar tokens
     readonly property int searchBarWidth: 420
