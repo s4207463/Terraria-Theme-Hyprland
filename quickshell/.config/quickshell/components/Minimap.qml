@@ -2,25 +2,18 @@ import QtQuick
 import "../services"
 
 // Minimap: Top-right framed box (DESIGN.md 3.1: workspace overview or custom image)
-Rectangle {
+Item {
     id: root
 
-    implicitWidth: Theme.minimapWidth + Theme.panelPadding * 2
-    implicitHeight: Theme.minimapHeight + Theme.panelPadding * 2
-
-    color: Theme.panel
-    border.color: Theme.panelBorder
-    border.width: Theme.borderWidth
-    radius: Theme.panelRadius
+    implicitWidth: Theme.minimapWidth
+    implicitHeight: Theme.minimapHeight
 
     Rectangle {
         id: screenFrame
-        anchors.centerIn: parent
-        width: Theme.minimapWidth
-        height: Theme.minimapHeight
-        color: Theme.slotBackground
-        border.color: Theme.slotBorder
-        border.width: 1
+        anchors.fill: parent
+        color: Theme.panel
+        border.color: Theme.panelBorder
+        border.width: Theme.borderWidth
         radius: Theme.panelRadius
 
         Column {

@@ -2,30 +2,27 @@ import QtQuick
 import "../services"
 
 // AccessoryPanel: 3x9 Equipment & Accessories Grid with tabs and defense shield
-Rectangle {
+// Seamless container directly aligned under the Minimap and info icons
+Item {
     id: root
 
-    implicitWidth: rowLayout.implicitWidth + Theme.panelPadding * 2
-    implicitHeight: rowLayout.implicitHeight + Theme.panelPadding * 2
-
-    color: Theme.panel
-    border.color: Theme.panelBorder
-    border.width: Theme.borderWidth
-    radius: Theme.panelRadius
+    implicitWidth: rowLayout.implicitWidth
+    implicitHeight: rowLayout.implicitHeight
 
     Row {
         id: rowLayout
         anchors.centerIn: parent
         spacing: Theme.spacing
 
-        // Defense Shield Badge (shown on lower-left in-game reference)
+        // Defense Shield Badge (aligned beside the lower accessory slots)
         Column {
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.accessorySlotSize * 1.2
             spacing: Theme.spacing
 
             Rectangle {
-                width: 24
-                height: 28
+                width: 26
+                height: 30
                 radius: 4
                 color: Theme.slotBackground
                 border.color: Theme.slotBorder
@@ -100,6 +97,7 @@ Rectangle {
 
                         Text {
                             anchors.centerIn: parent
+                            // Col 0: D (Dye), Col 1: V (Vanity), Col 2: E (Equip/Acc)
                             text: (col === 0 ? "D" : (col === 1 ? "V" : "E")) + (row + 1)
                             color: Theme.textDim
                             font.family: Theme.fontFamily

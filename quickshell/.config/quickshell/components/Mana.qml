@@ -2,19 +2,14 @@ import QtQuick
 import "../services"
 
 // Mana: Vertical column of 10 mana stars on the far right edge
-Rectangle {
+Item {
     id: root
 
     property int manaPercent: 100 // 0-100 percentage
     readonly property int totalStars: Theme.manaTotalStars
 
-    implicitWidth: starCol.implicitWidth + Theme.panelPadding * 2
-    implicitHeight: starCol.implicitHeight + Theme.panelPadding * 2
-
-    color: Theme.panel
-    border.color: Theme.panelBorder
-    border.width: Theme.borderWidth
-    radius: Theme.panelRadius
+    implicitWidth: starCol.implicitWidth
+    implicitHeight: starCol.implicitHeight
 
     Column {
         id: starCol

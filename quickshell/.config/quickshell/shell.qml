@@ -57,24 +57,24 @@ ShellRoot {
             spacing: Theme.spacing
 
             Column {
-                spacing: Theme.spacing
+                spacing: Theme.hudSpacing
 
                 Hearts {
-                    anchors.right: parent.right
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Minimap {
-                    anchors.right: parent.right
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 InfoPanel {
-                    anchors.right: parent.right
+                    anchors.horizontalCenter: parent.horizontalCenter
                     compact: root.inventoryOpen
                 }
 
                 // 3x9 Equipment & Accessories Grid directly under InfoPanel (visible when inventory is open)
                 AccessoryPanel {
-                    anchors.right: parent.right
+                    anchors.horizontalCenter: parent.horizontalCenter
                     visible: root.inventoryOpen
                 }
             }
@@ -82,6 +82,7 @@ ShellRoot {
             // Far right edge: Vertical Mana Star Column
             Mana {
                 id: manaBar
+                anchors.top: parent.top
             }
         }
     }

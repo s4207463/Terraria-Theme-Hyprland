@@ -51,14 +51,14 @@ QtObject {
     readonly property color manaEmptyColor: "#313244"
 
     // Minimap tokens
-    readonly property int minimapWidth: 160
+    readonly property int minimapWidth: 130
     readonly property int minimapHeight: 120
 
     // Accessory tokens (3 columns x 9 rows matching in-game equipment layout)
     readonly property int accessorySlotSize: 32
     readonly property int accessoryCols: 3
     readonly property int accessoryRows: 9
-    readonly property int accessorySpacing: 4
+    readonly property int accessorySpacing: 3
     readonly property int accessoryTotalSlots: 27
 
     // Search bar tokens
@@ -66,8 +66,9 @@ QtObject {
     readonly property int searchBarHeight: 36
 
     // Info performance icon tokens (compact mode)
-    readonly property int infoIconSize: 20
-    readonly property int infoIconSpacing: 4
+    readonly property int infoIconSize: 14
+    readonly property int infoIconSpacing: 2
+    readonly property int hudSpacing: 3
 
     // Inventory grid tokens (5 rows x 10 cols = 50 slots matching in-game layout)
     readonly property int inventoryRows: 5
