@@ -2,14 +2,16 @@ import QtQuick
 import "../services"
 
 // Hotbar: Top-left 10-slot app launcher and focus bar (DESIGN.md 3.1)
+// Expands seamlessly to 50-slot inventory grid when inventory opens, with 0ms instant frame snap like Terraria
 Item {
     id: root
 
     property int activeSlot: 0 // 0-indexed active slot (0 = slot 1)
     property string activeTitle: "Terminal" // Active app/item name displayed above hotbar
+    property bool expanded: false // Whether full inventory is expanded
     signal slotClicked(int index)
 
-    implicitWidth: hotbarBox.implicitWidth
+    implicitWidth: gridBox.implicitWidth
     implicitHeight: col.implicitHeight
 
     Column {
@@ -17,12 +19,12 @@ Item {
         anchors.centerIn: parent
         spacing: Theme.spacing
 
-        // Active item / app name displayed above hotbar matching Terraria HUD
+        // Active item name when closed, "Inventory" title when expanded (matching Terraria HUD)
         Text {
             id: titleLabel
-            anchors.left: hotbarBox.left
+            anchors.left: gridBox.left
             anchors.leftMargin: Theme.panelPadding
-            text: root.activeTitle
+            text: root.expanded ? "Inventory" : root.activeTitle
             color: Theme.text
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSizeSmall
@@ -30,24 +32,26 @@ Item {
             visible: text.length > 0
         }
 
-        // 10-slot hotbar container
+        // Slots container: 1 row of 10 when closed, 5 rows of 10 when expanded
         Rectangle {
-            id: hotbarBox
-            implicitWidth: row.implicitWidth + Theme.panelPadding * 2
-            implicitHeight: row.implicitHeight + Theme.panelPadding * 2
+            id: gridBox
+            implicitWidth: grid.implicitWidth + Theme.panelPadding * 2
+            implicitHeight: grid.implicitHeight + Theme.panelPadding * 2
 
             color: Theme.panel
             border.color: Theme.panelBorder
             border.width: Theme.borderWidth
             radius: Theme.panelRadius
 
-            Row {
-                id: row
+            Grid {
+                id: grid
                 anchors.centerIn: parent
+                columns: Theme.inventoryCols
+                rows: root.expanded ? Theme.inventoryRows : 1
                 spacing: Theme.spacing
 
                 Repeater {
-                    model: 10
+                    model: root.expanded ? Theme.inventoryTotalSlots : 10
                     delegate: Rectangle {
                         id: slot
                         required property int index
@@ -57,18 +61,21 @@ Item {
                         radius: Theme.panelRadius
                         color: Theme.slotBackground
 
-                        border.color: (root.activeSlot === index)
-                            ? Theme.slotBorderSelected
-                            : Theme.slotBorder
+                        readonly property bool isFavorite: (slot.index === 12)
+                        readonly property bool isHotbarRow: (slot.index < 10)
+                        readonly property bool isSelected: (root.activeSlot === slot.index)
+
+                        border.color: isFavorite
+                            ? Theme.slotBorderFavorited
+                            : (isSelected ? Theme.slotBorderSelected : (isHotbarRow ? Theme.accent : Theme.slotBorder))
                         border.width: Theme.borderWidth
 
                         Text {
                             anchors.centerIn: parent
-                            // In Terraria hotbar: slots 1..9, 0
-                            text: (slot.index === 9) ? "0" : (slot.index + 1).toString()
-                            color: (root.activeSlot === index)
+                            text: slot.isFavorite ? "★" : ((slot.index === 9) ? "0" : (slot.index + 1).toString())
+                            color: slot.isFavorite
                                 ? Theme.highlight
-                                : Theme.textDim
+                                : (slot.isSelected ? Theme.highlight : Theme.textDim)
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fontSizeSmall
                         }
@@ -77,7 +84,9 @@ Item {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
-                                root.activeSlot = slot.index
+                                if (slot.index < 10) {
+                                    root.activeSlot = slot.index
+                                }
                                 root.slotClicked(slot.index)
                             }
                         }

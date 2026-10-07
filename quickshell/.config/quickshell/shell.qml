@@ -25,13 +25,13 @@ ShellRoot {
         }
     }
 
-    // NORMAL SCREEN: Top-Left Hotbar Window
+    // NORMAL SCREEN: Top-Left Hotbar & Inventory Grid Window
     PanelWindow {
         id: hotbarWindow
         anchors.top: true
         anchors.left: true
         color: "transparent"
-        visible: !root.inventoryOpen
+        visible: true // Always visible - slots 1..10 never unmap or move
 
         implicitWidth: hotbar.implicitWidth + Theme.panelPadding * 3
         implicitHeight: hotbar.implicitHeight + Theme.panelPadding * 3
@@ -42,6 +42,7 @@ ShellRoot {
             anchors.leftMargin: Theme.panelPadding
             anchors.top: parent.top
             anchors.topMargin: Theme.panelPadding
+            expanded: root.inventoryOpen
         }
     }
 
@@ -111,7 +112,6 @@ ShellRoot {
         // Input mask: ONLY the actual panels receive clicks.
         // Transparent areas pass all clicks straight through to windows/games behind!
         mask: Region {
-            Region { item: inventoryComp.inventoryPanel }
             Region { item: inventoryComp.searchBarContainer }
             Region { item: inventoryComp.settingsBtn }
         }

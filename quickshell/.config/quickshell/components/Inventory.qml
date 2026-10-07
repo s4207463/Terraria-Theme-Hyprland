@@ -2,90 +2,17 @@ import QtQuick
 import QtQuick.Controls
 import "../services"
 
-// Inventory: Full overlay screen toggled via Super (DESIGN.md 3.2)
+// Inventory: Overlay elements (Centered Search Bar & Bottom-Right Settings Button)
+// Toggled via Super / Alt / IPC with 0ms instantaneous snap like Terraria
 Item {
     id: root
 
     signal requestClose()
     signal requestSettings()
 
-    // 50 slots: 5 rows x 10 cols matching in-game Terraria inventory
-    readonly property int totalSlots: Theme.inventoryTotalSlots
-
     // Exposed panel items for window input region masking
-    property alias inventoryPanel: inventoryPanel
     property alias searchBarContainer: searchBarContainer
     property alias settingsBtn: settingsBtn
-
-    // Top-Left: Inventory App Grid (5 rows x 10 cols)
-    Column {
-        id: inventoryPanel
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: Theme.panelPadding
-        anchors.topMargin: Theme.panelPadding
-        spacing: Theme.spacing
-
-        Text {
-            anchors.left: gridBox.left
-            anchors.leftMargin: Theme.panelPadding
-            text: "Inventory"
-            color: Theme.text
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
-            font.bold: true
-        }
-
-        Rectangle {
-            id: gridBox
-            implicitWidth: grid.implicitWidth + Theme.panelPadding * 2
-            implicitHeight: grid.implicitHeight + Theme.panelPadding * 2
-
-            color: Theme.panel
-            border.color: Theme.panelBorder
-            border.width: Theme.borderWidth
-            radius: Theme.panelRadius
-
-            Grid {
-                id: grid
-                anchors.centerIn: parent
-            columns: Theme.inventoryCols
-            rows: Theme.inventoryRows
-            spacing: Theme.spacing
-
-            Repeater {
-                model: root.totalSlots
-                delegate: Rectangle {
-                    id: invSlot
-                    required property int index
-
-                    width: Theme.slotSize
-                    height: Theme.slotSize
-                    radius: Theme.panelRadius
-                    color: Theme.slotBackground
-
-                    // Slot 12 marked as favorite placeholder ("Favorite apps")
-                    readonly property bool isFavorite: (invSlot.index === 12)
-                    // First row (0..9) mirrors Hotbar
-                    readonly property bool isHotbarRow: (invSlot.index < 10)
-
-                    border.color: isFavorite
-                        ? Theme.slotBorderFavorited
-                        : (isHotbarRow ? Theme.accent : Theme.slotBorder)
-                    border.width: Theme.borderWidth
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: isFavorite ? "★" : (invSlot.index + 1).toString()
-                        color: isFavorite ? Theme.highlight : Theme.textDim
-                        font.family: Theme.fontFamily
-                        font.pixelSize: Theme.fontSizeSmall
-                    }
-                }
-            }
-        }
-    }
-}
 
     // Center: Search Bar ("Search bar in the middle")
     Rectangle {
@@ -120,7 +47,6 @@ Item {
             }
         }
     }
-
 
     // Bottom-Right: Standalone Settings Button aligned with accessories
     Rectangle {
