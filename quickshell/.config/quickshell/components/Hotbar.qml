@@ -49,7 +49,10 @@ Item {
 
             Grid {
                 id: grid
-                anchors.centerIn: parent
+                anchors.top: parent.top
+                anchors.topMargin: Theme.panelPadding
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.panelPadding
                 columns: Theme.inventoryCols
                 rows: Theme.inventoryRows
                 spacing: Theme.spacing
