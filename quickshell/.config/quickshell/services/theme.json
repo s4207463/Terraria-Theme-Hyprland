@@ -13,7 +13,8 @@
     "slotBackground": "#1e1e2e",
     "slotBorder": "#45475a",
     "slotBorderSelected": "#f9e2af",
-    "slotBorderFavorited": "#fab387"
+    "slotBorderFavorited": "#fab387",
+    "overlayBackground": "#b00d0e15"
   },
   "typography": {
     "fontFamily": "sans-serif",
@@ -28,6 +29,15 @@
     "panelPadding": 8,
     "panelRadius": 4,
     "borderWidth": 2,
-    "spacing": 6
+    "spacing": 6,
+    "heartSize": 12,
+    "heartSpacing": 3,
+    "minimapWidth": 160,
+    "minimapHeight": 120,
+    "accessorySlotSize": 36,
+    "accessorySlotCount": 5,
+    "searchBarWidth": 420,
+    "searchBarHeight": 36,
+    "buttonHeight": 32
   }
 }

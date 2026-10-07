@@ -1,35 +1,133 @@
 import Quickshell
+import Quickshell.Wayland
+import Quickshell.Io
 import QtQuick
 import "./services"
+import "./components"
 
 ShellRoot {
-    // Placeholder panel at top-left (Hotbar location)
+    id: root
+
+    // Controls whether Inventory overlay is active (Super tap or INV button)
+    property bool inventoryOpen: false
+
+    // IPC handler for keybinds: `qs ipc call inventory toggle`
+    IpcHandler {
+        target: "inventory"
+        function toggle() {
+            root.inventoryOpen = !root.inventoryOpen
+        }
+        function open() {
+            root.inventoryOpen = true
+        }
+        function close() {
+            root.inventoryOpen = false
+        }
+    }
+
+    // NORMAL SCREEN: Top-Left Hotbar Window
     PanelWindow {
-        id: placeholderPanel
+        id: hotbarWindow
         anchors.top: true
         anchors.left: true
         color: "transparent"
 
-        implicitWidth: content.implicitWidth
-        implicitHeight: content.implicitHeight
+        implicitWidth: hotbarLayout.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: hotbarLayout.implicitHeight + Theme.panelPadding * 2
 
-        Rectangle {
-            id: content
-            implicitWidth: label.implicitWidth + Theme.panelPadding * 4
-            implicitHeight: label.implicitHeight + Theme.panelPadding * 2
-            color: Theme.panel
-            border.color: Theme.panelBorder
-            border.width: Theme.borderWidth
-            radius: Theme.panelRadius
+        Row {
+            id: hotbarLayout
+            anchors.centerIn: parent
+            spacing: Theme.spacing
 
-            Text {
-                id: label
-                anchors.centerIn: parent
-                text: "Terraria Shell (Phase 1 Skeleton)"
-                color: Theme.text
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.fontSizeNormal
+            Hotbar {
+                id: hotbar
             }
+
+            // Quick click toggle for testing without keybinds
+            Rectangle {
+                width: Theme.slotSize
+                height: Theme.slotSize
+                color: Theme.buttonBackground
+                border.color: Theme.panelBorder
+                border.width: Theme.borderWidth
+                radius: Theme.panelRadius
+
+                Text {
+                    anchors.centerIn: parent
+                    text: root.inventoryOpen ? "✕" : "INV"
+                    color: Theme.accent
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSizeSmall
+                    font.bold: true
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.inventoryOpen = !root.inventoryOpen
+                }
+            }
+        }
+    }
+
+    // NORMAL SCREEN: Top-Right HUD Window (Hearts, Minimap, InfoPanel)
+    PanelWindow {
+        id: hudWindow
+        anchors.top: true
+        anchors.right: true
+        color: "transparent"
+
+        implicitWidth: hudColumn.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: hudColumn.implicitHeight + Theme.panelPadding * 2
+
+        Column {
+            id: hudColumn
+            anchors.centerIn: parent
+            spacing: Theme.spacing
+
+            Hearts {
+                anchors.right: parent.right
+            }
+
+            Minimap {
+                anchors.right: parent.right
+            }
+
+            InfoPanel {
+                anchors.right: parent.right
+            }
+        }
+    }
+
+    // INVENTORY OVERLAY (Toggled by Super / IPC / INV button)
+    PanelWindow {
+        id: overlayWindow
+        anchors.top: true
+        anchors.bottom: true
+        anchors.left: true
+        anchors.right: true
+        color: Theme.overlayBackground
+
+        visible: root.inventoryOpen
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: root.inventoryOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+
+        // Dismiss when clicking on empty background
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.inventoryOpen = false
+        }
+
+        Inventory {
+            anchors.fill: parent
+            onRequestClose: root.inventoryOpen = false
+            onRequestSettings: console.log("[TerrariaShell] Settings clicked")
+        }
+
+        Item {
+            focus: root.inventoryOpen
+            Keys.onEscapePressed: root.inventoryOpen = false
         }
     }
 

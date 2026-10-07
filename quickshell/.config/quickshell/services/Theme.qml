@@ -19,6 +19,9 @@ QtObject {
     readonly property color slotBorderSelected: "#f9e2af"
     readonly property color slotBorderFavorited: "#fab387"
 
+    // Overlay
+    readonly property color overlayBackground: "#b00d0e15"
+
     // Typography
     readonly property string fontFamily: "sans-serif"
     readonly property int fontSizeSmall: 10
@@ -33,4 +36,27 @@ QtObject {
     readonly property int panelRadius: 4
     readonly property int borderWidth: 2
     readonly property int spacing: 6
+
+    // Heart tokens (Battery: 20 hearts, 2 rows of 10)
+    readonly property int heartSize: 12
+    readonly property int heartSpacing: 3
+    readonly property color heartColor: "#f38ba8"
+    readonly property color heartEmptyColor: "#313244"
+
+    // Minimap tokens
+    readonly property int minimapWidth: 160
+    readonly property int minimapHeight: 120
+
+    // Accessory tokens
+    readonly property int accessorySlotSize: 36
+    readonly property int accessorySlotCount: 5
+
+    // Search bar tokens
+    readonly property int searchBarWidth: 420
+    readonly property int searchBarHeight: 36
+
+    // Button tokens
+    readonly property int buttonHeight: 32
+    readonly property color buttonBackground: "#313244"
+    readonly property color buttonHover: "#45475a"
 }
