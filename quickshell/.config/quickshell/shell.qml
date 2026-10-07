@@ -25,6 +25,16 @@ ShellRoot {
         }
     }
 
+    // IPC handler for 2D Player Demo: `qs ipc call player <action>`
+    IpcHandler {
+        target: "player"
+        function walkLeft() { playerDemo.walkLeft() }
+        function walkRight() { playerDemo.walkRight() }
+        function stop() { playerDemo.stop() }
+        function jump() { playerDemo.jump() }
+        function moveTo(target: real) { playerDemo.moveTo(target) }
+    }
+
     // Single unified fullscreen window:
     // Permanently mapped, never resizes, never remaps.
     // Toggling inventory is a pure 0ms frame-flip with zero compositor animations/effects, exactly like Terraria!
@@ -48,6 +58,9 @@ ShellRoot {
             Region { item: accessoryPanel }
             Region { item: inventoryOverlay.searchBarContainer }
             Region { item: inventoryOverlay.settingsBtn }
+            Region { item: playerDemo.groundStrip }
+            Region { item: playerDemo.characterItem }
+            Region { item: playerDemo.guideBadge }
         }
 
         // TOP-LEFT: Hotbar & Expanded Inventory Grid (Hotbar slots 1..10 never move or unmap)
@@ -82,6 +95,16 @@ ShellRoot {
                 anchors.right: parent.right
                 compact: root.inventoryOpen
             }
+        }
+
+        // BOTTOM: 2D Movable Terraria Character Demo
+        PlayerDemo {
+            id: playerDemo
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: root.inventoryOpen ? (Theme.settingsRightMargin + 190) : 0
+            anchors.bottom: parent.bottom
+            height: Theme.groundHeight + Theme.playerHeight + 90
         }
 
         // MID-TO-BOTTOM-RIGHT: 3x9 Accessories Grid (only visible when inventory is open)

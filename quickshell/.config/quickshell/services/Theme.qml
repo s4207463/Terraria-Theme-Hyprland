@@ -94,4 +94,15 @@ QtObject {
     readonly property int buttonHeight: 30
     readonly property color buttonBackground: "#313244"
     readonly property color buttonHover: "#45475a"
+
+    // 2D Player Demo tokens (Terraria proportions & physics)
+    readonly property int playerWidth: 24
+    readonly property int playerHeight: 44
+    readonly property int groundHeight: 28
+    readonly property color playerHair: "#f9e2af"
+    readonly property color playerSkin: "#f5c2e7"
+    readonly property color playerShirt: "#89b4fa"
+    readonly property color playerPants: "#585b70"
+    readonly property color groundTop: "#a6e3a1"
+    readonly property color groundBody: "#313244"
 }
