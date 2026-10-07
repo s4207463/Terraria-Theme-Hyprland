@@ -24,12 +24,12 @@
     "fontSizeHeader": 16
   },
   "dimensions": {
-    "slotSize": 44,
-    "slotPadding": 4,
-    "panelPadding": 8,
-    "panelRadius": 4,
-    "borderWidth": 2,
-    "spacing": 6,
+    "slotSize": 28,
+    "slotPadding": 2,
+    "panelPadding": 6,
+    "panelRadius": 3,
+    "borderWidth": 1,
+    "spacing": 3,
     "heartSize": 12,
     "heartSpacing": 3,
     "manaStarSize": 14,

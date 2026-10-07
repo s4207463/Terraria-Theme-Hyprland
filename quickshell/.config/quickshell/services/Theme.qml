@@ -29,13 +29,13 @@ QtObject {
     readonly property int fontSizeLarge: 14
     readonly property int fontSizeHeader: 16
 
-    // Dimensions & Spacing
-    readonly property int slotSize: 44
-    readonly property int slotPadding: 4
-    readonly property int panelPadding: 8
-    readonly property int panelRadius: 4
-    readonly property int borderWidth: 2
-    readonly property int spacing: 6
+    // Dimensions & Spacing (calibrated to match in-game Terraria UI scale)
+    readonly property int slotSize: 28
+    readonly property int slotPadding: 2
+    readonly property int panelPadding: 6
+    readonly property int panelRadius: 3
+    readonly property int borderWidth: 1
+    readonly property int spacing: 3
 
     // Heart tokens (Battery: 20 hearts, 2 rows of 10)
     readonly property int heartSize: 12
