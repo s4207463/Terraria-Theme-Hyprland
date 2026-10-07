@@ -11,7 +11,7 @@ Item {
 
     Row {
         id: rowLayout
-        anchors.centerIn: parent
+        anchors.right: parent.right
         spacing: Theme.spacing
 
         // Defense Shield Badge (aligned beside the lower accessory slots)

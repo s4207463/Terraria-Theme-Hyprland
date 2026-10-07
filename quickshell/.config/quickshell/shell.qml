@@ -67,21 +67,21 @@ ShellRoot {
                 spacing: Theme.hudSpacing
 
                 Hearts {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                 }
 
                 Minimap {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                 }
 
                 InfoPanel {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                     compact: root.inventoryOpen
                 }
 
                 // 3x9 Equipment & Accessories Grid directly under InfoPanel (visible when inventory is open)
                 AccessoryPanel {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                     visible: root.inventoryOpen
                 }
             }

@@ -122,12 +122,13 @@ Item {
     }
 
 
-    // Bottom-Right Corner: Standalone Settings Button ("go to setting")
+    // Bottom-Right: Standalone Settings Button aligned with accessories
     Rectangle {
         id: settingsBtn
         anchors.right: parent.right
+        anchors.rightMargin: Theme.settingsRightMargin
         anchors.bottom: parent.bottom
-        anchors.margins: Theme.panelPadding * 2
+        anchors.bottomMargin: Theme.panelPadding * 3
 
         implicitWidth: settingsLabel.implicitWidth + Theme.panelPadding * 4
         implicitHeight: Theme.buttonHeight

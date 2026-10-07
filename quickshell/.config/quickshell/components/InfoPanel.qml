@@ -19,7 +19,7 @@ Item {
     // 1. Compact Mode: Row of circular icons directly hugging the Minimap
     Row {
         id: iconRow
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.right: parent.right
         spacing: Theme.infoIconSpacing
         visible: root.compact
 

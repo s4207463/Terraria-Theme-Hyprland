@@ -29,54 +29,58 @@ QtObject {
     readonly property int fontSizeLarge: 14
     readonly property int fontSizeHeader: 16
 
-    // Dimensions & Spacing (calibrated to match in-game Terraria UI scale)
-    readonly property int slotSize: 28
+    // Dimensions & Spacing (calibrated to exact vertical proportions: 1/3 map+health, 1/2 accessories, 1/4 inventory)
+    readonly property int slotSize: 40
     readonly property int slotPadding: 2
     readonly property int panelPadding: 6
     readonly property int panelRadius: 3
     readonly property int borderWidth: 1
-    readonly property int spacing: 3
+    readonly property int spacing: 4
 
     // Heart tokens (Battery: 20 hearts, 2 rows of 10)
-    readonly property int heartSize: 12
-    readonly property int heartSpacing: 3
+    // 10 hearts width = 10 * 18 + 9 * 4 = 216px
+    readonly property int heartSize: 18
+    readonly property int heartSpacing: 4
     readonly property color heartColor: "#f38ba8"
     readonly property color heartEmptyColor: "#313244"
 
     // Mana tokens (Vertical column of 10 stars on far right edge)
-    readonly property int manaStarSize: 14
-    readonly property int manaStarSpacing: 3
+    readonly property int manaStarSize: 20
+    readonly property int manaStarSpacing: 5
     readonly property int manaTotalStars: 10
     readonly property color manaColor: "#89dceb"
     readonly property color manaEmptyColor: "#313244"
 
-    // Minimap tokens
-    readonly property int minimapWidth: 150
-    readonly property int minimapHeight: 120
+    // Minimap tokens: Health (60px) + Minimap (240px) ~ 300px = 1/3 vertical length
+    readonly property int minimapWidth: 224
+    readonly property int minimapHeight: 240
 
-    // Accessory tokens (3 columns x 9 rows matching in-game equipment layout)
-    readonly property int accessorySlotSize: 32
+    // Accessory tokens: 9 rows * 44px + spacing + tabs ~ 450px = 1/2 vertical length
+    readonly property int accessorySlotSize: 44
     readonly property int accessoryCols: 3
     readonly property int accessoryRows: 9
-    readonly property int accessorySpacing: 3
+    readonly property int accessorySpacing: 4
     readonly property int accessoryTotalSlots: 27
+
+    // Settings button alignment to match accessories right edge
+    readonly property int settingsRightMargin: panelPadding + manaStarSize + spacing * 3
 
     // Search bar tokens
     readonly property int searchBarWidth: 420
     readonly property int searchBarHeight: 36
 
     // Info performance icon tokens (compact mode)
-    readonly property int infoIconSize: 14
-    readonly property int infoIconSpacing: 2
-    readonly property int hudSpacing: 3
+    readonly property int infoIconSize: 18
+    readonly property int infoIconSpacing: 3
+    readonly property int hudSpacing: 6
 
-    // Inventory grid tokens (5 rows x 10 cols = 50 slots matching in-game layout)
+    // Inventory grid tokens: 5 rows * 40px + spacing ~ 225px = 1/4 vertical length
     readonly property int inventoryRows: 5
     readonly property int inventoryCols: 10
     readonly property int inventoryTotalSlots: 50
 
     // Button tokens
-    readonly property int buttonHeight: 32
+    readonly property int buttonHeight: 30
     readonly property color buttonBackground: "#313244"
     readonly property color buttonHover: "#45475a"
 }
