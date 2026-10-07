@@ -71,6 +71,12 @@ ShellRoot {
                     anchors.right: parent.right
                     compact: root.inventoryOpen
                 }
+
+                // 3x9 Equipment & Accessories Grid directly under InfoPanel (visible when inventory is open)
+                AccessoryPanel {
+                    anchors.right: parent.right
+                    visible: root.inventoryOpen
+                }
             }
 
             // Far right edge: Vertical Mana Star Column
@@ -99,7 +105,6 @@ ShellRoot {
         mask: Region {
             Region { item: inventoryComp.inventoryPanel }
             Region { item: inventoryComp.searchBarContainer }
-            Region { item: inventoryComp.accessoryPanel }
             Region { item: inventoryComp.settingsBtn }
         }
 
