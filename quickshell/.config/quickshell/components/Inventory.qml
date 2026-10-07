@@ -101,37 +101,34 @@ Item {
         }
     }
 
-    // Right Column: Accessories ("can choose the performance to show") + Settings ("go to setting")
+    // Bottom-Left: Accessories ("can choose the performance to show")
     Rectangle {
         id: accessoryPanel
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: Theme.minimapHeight + Theme.panelPadding * 6
-        anchors.rightMargin: Theme.panelPadding * 2
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.margins: Theme.panelPadding * 2
 
-        implicitWidth: accCol.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: accCol.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: accLayout.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: accLayout.implicitHeight + Theme.panelPadding * 2
 
         color: Theme.panel
         border.color: Theme.panelBorder
         border.width: Theme.borderWidth
         radius: Theme.panelRadius
 
-        Column {
-            id: accCol
+        Row {
+            id: accLayout
             anchors.centerIn: parent
             spacing: Theme.spacing
 
-            // Header
             Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "ACCESSORIES"
+                anchors.verticalCenter: parent.verticalCenter
+                text: "ACCESSORIES:"
                 color: Theme.accent
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeSmall
             }
 
-            // Accessory slots column
             Repeater {
                 model: Theme.accessorySlotCount
                 delegate: Rectangle {
@@ -153,36 +150,36 @@ Item {
                     }
                 }
             }
+        }
+    }
 
-            Item {
-                width: 1
-                height: Theme.spacing
-            }
+    // Bottom-Right: Settings Button ("go to setting")
+    Rectangle {
+        id: settingsBtn
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: Theme.panelPadding * 2
 
-            // Settings Button ("go to setting")
-            Rectangle {
-                id: settingsBtn
-                width: Theme.accessorySlotSize + Theme.panelPadding * 2
-                height: Theme.buttonHeight
-                radius: Theme.panelRadius
-                color: Theme.buttonBackground
-                border.color: Theme.panelBorder
-                border.width: Theme.borderWidth
+        implicitWidth: settingsLabel.implicitWidth + Theme.panelPadding * 4
+        implicitHeight: Theme.buttonHeight
+        radius: Theme.panelRadius
+        color: Theme.buttonBackground
+        border.color: Theme.panelBorder
+        border.width: Theme.borderWidth
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "Settings"
-                    color: Theme.text
-                    font.family: Theme.fontFamily
-                    font.pixelSize: Theme.fontSizeSmall
-                }
+        Text {
+            id: settingsLabel
+            anchors.centerIn: parent
+            text: "Settings"
+            color: Theme.text
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeSmall
+        }
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.requestSettings()
-                }
-            }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.requestSettings()
         }
     }
 }
