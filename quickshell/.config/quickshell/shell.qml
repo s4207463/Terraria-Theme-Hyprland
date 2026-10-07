@@ -41,32 +41,41 @@ ShellRoot {
         }
     }
 
-    // NORMAL SCREEN: Top-Right HUD Window (Hearts, Minimap, InfoPanel)
+    // NORMAL SCREEN: Top-Right HUD Window (Hearts, Minimap, InfoPanel, Mana)
     PanelWindow {
         id: hudWindow
         anchors.top: true
         anchors.right: true
         color: "transparent"
 
-        implicitWidth: hudColumn.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: hudColumn.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: hudRow.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: hudRow.implicitHeight + Theme.panelPadding * 2
 
-        Column {
-            id: hudColumn
+        Row {
+            id: hudRow
             anchors.centerIn: parent
             spacing: Theme.spacing
 
-            Hearts {
-                anchors.right: parent.right
+            Column {
+                spacing: Theme.spacing
+
+                Hearts {
+                    anchors.right: parent.right
+                }
+
+                Minimap {
+                    anchors.right: parent.right
+                }
+
+                InfoPanel {
+                    anchors.right: parent.right
+                    compact: root.inventoryOpen
+                }
             }
 
-            Minimap {
-                anchors.right: parent.right
-            }
-
-            InfoPanel {
-                anchors.right: parent.right
-                compact: root.inventoryOpen
+            // Far right edge: Vertical Mana Star Column
+            Mana {
+                id: manaBar
             }
         }
     }

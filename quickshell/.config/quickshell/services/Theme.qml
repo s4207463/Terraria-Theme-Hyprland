@@ -43,6 +43,13 @@ QtObject {
     readonly property color heartColor: "#f38ba8"
     readonly property color heartEmptyColor: "#313244"
 
+    // Mana tokens (Vertical column of 10 stars on far right edge)
+    readonly property int manaStarSize: 14
+    readonly property int manaStarSpacing: 3
+    readonly property int manaTotalStars: 10
+    readonly property color manaColor: "#89dceb"
+    readonly property color manaEmptyColor: "#313244"
+
     // Minimap tokens
     readonly property int minimapWidth: 160
     readonly property int minimapHeight: 120
