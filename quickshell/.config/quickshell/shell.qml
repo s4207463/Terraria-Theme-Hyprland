@@ -70,6 +70,7 @@ ShellRoot {
             spacing: Theme.spacing * 2
 
             Column {
+                width: Theme.minimapWidth
                 spacing: Theme.hudSpacing
 
                 Hearts {
