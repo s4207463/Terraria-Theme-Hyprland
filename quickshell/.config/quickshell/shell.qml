@@ -38,15 +38,16 @@ ShellRoot {
         visible: true
 
         WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.keyboardFocus: root.inventoryOpen ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
         // Input mask: ONLY the interactive UI panels intercept clicks.
         // Transparent areas pass 100% of mouse clicks straight through to games/windows behind!
         mask: Region {
             Region { item: hotbar }
             Region { item: hudRow }
-            Region { item: root.inventoryOpen ? inventoryOverlay.searchBarContainer : null }
-            Region { item: root.inventoryOpen ? inventoryOverlay.settingsBtn : null }
+            Region { item: accessoryPanel }
+            Region { item: inventoryOverlay.searchBarContainer }
+            Region { item: inventoryOverlay.settingsBtn }
         }
 
         // TOP-LEFT: Hotbar & Expanded Inventory Grid (Hotbar slots 1..10 never move or unmap)
@@ -59,7 +60,7 @@ ShellRoot {
             expanded: root.inventoryOpen
         }
 
-        // TOP-RIGHT: HUD Stack (Hearts, Minimap, InfoPanel, Accessories, Mana)
+        // TOP-RIGHT: HUD Stack (Hearts, Minimap, InfoPanel, Mana) - exactly ~1/3 vertical height
         Row {
             id: hudRow
             anchors.right: parent.right
@@ -83,12 +84,6 @@ ShellRoot {
                     anchors.right: parent.right
                     compact: root.inventoryOpen
                 }
-
-                // 3x9 Accessories grid appears instantaneously under InfoPanel when inventory is open
-                AccessoryPanel {
-                    anchors.right: parent.right
-                    visible: root.inventoryOpen
-                }
             }
 
             // Far right edge: Vertical Mana Star Column
@@ -96,6 +91,17 @@ ShellRoot {
                 id: manaBar
                 anchors.top: parent.top
             }
+        }
+
+        // MID-TO-BOTTOM-RIGHT: 3x9 Accessories Grid (only visible when inventory is open)
+        // Positioned independently: ~1/2 vertical length, directly above Settings button
+        AccessoryPanel {
+            id: accessoryPanel
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.settingsRightMargin
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.buttonHeight + Theme.panelPadding * 3 + Theme.spacing * 2
+            visible: root.inventoryOpen
         }
 
         // OVERLAY ELEMENTS: Search Bar & Settings Button (only visible when inventory is open)
@@ -107,9 +113,22 @@ ShellRoot {
             onRequestSettings: console.log("[TerrariaShell] Settings clicked")
         }
 
+        // Keyboard handler when inventory is open: instant 0ms closing on Escape, Alt, Super, F1, I
         Item {
+            anchors.fill: parent
             focus: root.inventoryOpen
-            Keys.onEscapePressed: root.inventoryOpen = false
+
+            Keys.onPressed: function(event) {
+                if (event.key === Qt.Key_Escape ||
+                    event.key === Qt.Key_Alt ||
+                    event.key === Qt.Key_Super_L ||
+                    event.key === Qt.Key_Super_R ||
+                    event.key === Qt.Key_F1 ||
+                    event.key === Qt.Key_I) {
+                    root.inventoryOpen = false
+                    event.accepted = true
+                }
+            }
         }
     }
 

@@ -16,7 +16,8 @@ Item {
 
     Column {
         id: col
-        anchors.centerIn: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
         spacing: Theme.spacing
 
         // Active item name when closed, "Inventory" title when expanded (matching Terraria HUD)
@@ -35,8 +36,11 @@ Item {
         // Slots container: 1 row of 10 when closed, 5 rows of 10 when expanded
         Rectangle {
             id: gridBox
-            implicitWidth: grid.implicitWidth + Theme.panelPadding * 2
-            implicitHeight: grid.implicitHeight + Theme.panelPadding * 2
+            clip: true
+            implicitWidth: Theme.inventoryCols * Theme.slotSize + (Theme.inventoryCols - 1) * Theme.spacing + Theme.panelPadding * 2
+            implicitHeight: root.expanded
+                ? (Theme.inventoryRows * Theme.slotSize + (Theme.inventoryRows - 1) * Theme.spacing + Theme.panelPadding * 2)
+                : (Theme.slotSize + Theme.panelPadding * 2)
 
             color: Theme.panel
             border.color: Theme.panelBorder
@@ -47,14 +51,15 @@ Item {
                 id: grid
                 anchors.centerIn: parent
                 columns: Theme.inventoryCols
-                rows: root.expanded ? Theme.inventoryRows : 1
+                rows: Theme.inventoryRows
                 spacing: Theme.spacing
 
                 Repeater {
-                    model: root.expanded ? Theme.inventoryTotalSlots : 10
+                    model: Theme.inventoryTotalSlots
                     delegate: Rectangle {
                         id: slot
                         required property int index
+                        visible: root.expanded || slot.index < 10
 
                         width: Theme.slotSize
                         height: Theme.slotSize
