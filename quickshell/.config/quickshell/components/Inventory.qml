@@ -101,34 +101,35 @@ Item {
         }
     }
 
-    // Bottom-Left: Accessories ("can choose the performance to show")
+    // Bottom-Right: Vertical Accessories Column ("can choose the performance to show") + Settings ("go to setting")
     Rectangle {
         id: accessoryPanel
-        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: Theme.panelPadding * 2
 
-        implicitWidth: accLayout.implicitWidth + Theme.panelPadding * 2
-        implicitHeight: accLayout.implicitHeight + Theme.panelPadding * 2
+        implicitWidth: accCol.implicitWidth + Theme.panelPadding * 2
+        implicitHeight: accCol.implicitHeight + Theme.panelPadding * 2
 
         color: Theme.panel
         border.color: Theme.panelBorder
         border.width: Theme.borderWidth
         radius: Theme.panelRadius
 
-        Row {
-            id: accLayout
+        Column {
+            id: accCol
             anchors.centerIn: parent
             spacing: Theme.spacing
 
             Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text: "ACCESSORIES:"
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "ACCESSORIES"
                 color: Theme.accent
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeSmall
             }
 
+            // Vertical accessory slots
             Repeater {
                 model: Theme.accessorySlotCount
                 delegate: Rectangle {
@@ -150,36 +151,36 @@ Item {
                     }
                 }
             }
-        }
-    }
 
-    // Bottom-Right: Settings Button ("go to setting")
-    Rectangle {
-        id: settingsBtn
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.margins: Theme.panelPadding * 2
+            Item {
+                width: 1
+                height: Theme.spacing
+            }
 
-        implicitWidth: settingsLabel.implicitWidth + Theme.panelPadding * 4
-        implicitHeight: Theme.buttonHeight
-        radius: Theme.panelRadius
-        color: Theme.buttonBackground
-        border.color: Theme.panelBorder
-        border.width: Theme.borderWidth
+            // Settings Button ("go to setting")
+            Rectangle {
+                id: settingsBtn
+                width: Theme.accessorySlotSize + Theme.panelPadding * 2
+                height: Theme.buttonHeight
+                radius: Theme.panelRadius
+                color: Theme.buttonBackground
+                border.color: Theme.panelBorder
+                border.width: Theme.borderWidth
 
-        Text {
-            id: settingsLabel
-            anchors.centerIn: parent
-            text: "Settings"
-            color: Theme.text
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
-        }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Settings"
+                    color: Theme.text
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSizeSmall
+                }
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.requestSettings()
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.requestSettings()
+                }
+            }
         }
     }
 }
