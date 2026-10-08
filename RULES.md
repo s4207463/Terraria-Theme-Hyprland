@@ -91,12 +91,11 @@ Terraria-Theme-Hyprland/
 - Before any commit: show `git status` and `git diff --cached` and check for sensitive data.
 - Validate and quote anything read from the system (app names, window titles) before passing it to a shell command. Never build commands by string concatenation with untrusted text.
 
-### A7. Licensing and assets
+### A7. Game Assets and Styling (Updated per owner request)
 
-- Do **not** add Terraria's sprites, audio, or font files to the repo.
-- Do not copy or redraw Terraria's characters or items. Create **original** sprites with the same roles (a Guide-like old man, a Nurse-like healer).
-- Third-party assets: only CC0 or properly licensed ones, and record the source and license in `assets/CREDITS.md`.
-- Fonts: free pixel font under OFL. The font family is one setting so it can be swapped.
+- Authentic Terraria sprites, textures, UI elements, audio, and font files are explicitly welcomed and encouraged for desktop theming.
+- Assets should be organized cleanly under `assets/` (e.g. `assets/sprites/`, `assets/ui/`, `assets/fonts/`).
+- Separation of concerns remains active: paths and asset tokens should be configured cleanly via `Theme.qml` or asset loaders rather than hardcoding ad-hoc paths across components.
 
 ### A8. Performance rules
 
@@ -150,11 +149,11 @@ If a change breaks the session:
 - Plain text labels like `[1] kitty`, `CPU 23%`, `Guide`
 - Placeholder `Theme` tokens (neutral dark palette, one accent color)
 
-### B2. What is NOT allowed
+### B2. Artistic assets & styling (Updated per owner request)
 
-- Real art, sprites, custom fonts, gradients, borders, or decoration
-- Spending time on polish or animation (the village scene stays static in this phase)
-- Hardcoding colors or sizes in components (the separation rule still applies)
+- Real Terraria art, authentic sprites, pixel art textures, custom fonts, borders, and decorations are allowed and encouraged.
+- Polish, animations, and game-faithful visual styling can be implemented directly.
+- The separation rule still applies: colors, asset paths, and dimensions belong in `Theme.qml` or asset configurations.
 
 ### B3. Build order
 

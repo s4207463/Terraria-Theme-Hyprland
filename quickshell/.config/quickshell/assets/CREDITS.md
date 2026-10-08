@@ -1,9 +1,9 @@
 # Asset Credits & Licensing
 
-All assets used in this project must adhere strictly to Rule A7:
-- No copyrighted Terraria game assets, audio, or fonts may be committed.
-- Original assets or CC0/CC-BY/OFL licensed third-party assets only.
+Terraria assets and styling used in this theme:
+- Terraria game assets, sprites, audio, and visual design are copyright Re-Logic.
+- Used under fair use for personal non-commercial desktop theming per project owner request.
 
 | Asset | Role | Source | License | Notes |
 |---|---|---|---|---|
-| (None yet) | Phase 1 uses placeholder tokens | N/A | N/A | Sprites/fonts to be added in Phase 2 |
+| Terraria UI & Assets | In-game HUD, sprites, and icons | Re-Logic / Terraria | Personal non-commercial desktop theme | Authentic game art |
