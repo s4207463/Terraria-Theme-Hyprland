@@ -51,19 +51,23 @@ QtObject {
     readonly property color manaColor: "#89dceb"
     readonly property color manaEmptyColor: "#313244"
 
-    // Minimap tokens: Health (60px) + Minimap (240px) ~ 300px = 1/3 vertical length
-    readonly property int minimapWidth: 224
+    // Minimap tokens: Exact Terraria ratio (~240w x 240h, golden border)
+    readonly property int minimapWidth: 240
     readonly property int minimapHeight: 240
+    readonly property color minimapBorder: barBorder
 
-    // Accessory tokens: 9 rows * 44px + spacing + tabs ~ 450px = 1/2 vertical length
-    readonly property int accessorySlotSize: 44
+    // Accessory tokens: 10 rows (3 armor + divider + 7 accessories), 3 cols (Dye, Social, Equip)
+    // 3 cols * 36px + spacing = ~114px grid + eye toggles = ~132px (~55% of 240px Minimap width)
+    readonly property int accessorySlotSize: 36
     readonly property int accessoryCols: 3
-    readonly property int accessoryRows: 9
-    readonly property int accessorySpacing: 4
-    readonly property int accessoryTotalSlots: 27
+    readonly property int accessoryRows: 10
+    readonly property int accessorySpacing: 3
+    readonly property int accessoryTotalSlots: 30
+    readonly property int defenseShieldWidth: 32
+    readonly property int defenseShieldHeight: 34
 
-    // Health & Mana Bar tokens (Bar HUD style from Terraria)
-    readonly property int healthBarWidth: 250
+    // Health & Mana Bar tokens (Bar HUD style from Terraria, flush right with Minimap)
+    readonly property int healthBarWidth: 248
     readonly property int healthBarHeight: 18
     readonly property int manaBarWidth: 155
     readonly property int manaBarHeight: 14
@@ -73,16 +77,16 @@ QtObject {
     readonly property int manaSegmentsTotal: 10
     readonly property color barBorder: "#d4af37"
 
-    // Settings button alignment to match accessories right edge
+    // Settings text tokens (Terraria stylized text centered under accessory grid)
     readonly property int settingsRightMargin: panelPadding * 2
 
     // Search bar tokens
     readonly property int searchBarWidth: 420
     readonly property int searchBarHeight: 36
 
-    // Info performance icon tokens (compact mode)
-    readonly property int infoIconSize: 18
-    readonly property int infoIconSpacing: 3
+    // Info performance icon tokens (compact mode: row of 7 icons on left below map)
+    readonly property int infoIconSize: 13
+    readonly property int infoIconSpacing: 2
     readonly property int hudSpacing: 6
 
     // Inventory grid tokens: 5 rows * 40px + spacing ~ 225px = 1/4 vertical length

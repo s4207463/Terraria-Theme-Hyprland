@@ -48,32 +48,38 @@ Item {
         }
     }
 
-    // Bottom-Right: Standalone Settings Button aligned with accessories
-    Rectangle {
-        id: settingsBtn
-        anchors.right: parent.right
-        anchors.rightMargin: Theme.settingsRightMargin
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.panelPadding * 3
+    // Horizontal center for Settings alignment under accessories
+    property real settingsCenterX: 0
 
-        implicitWidth: settingsLabel.implicitWidth + Theme.panelPadding * 4
-        implicitHeight: Theme.buttonHeight
-        radius: Theme.panelRadius
-        color: Theme.buttonBackground
-        border.color: Theme.panelBorder
-        border.width: Theme.borderWidth
+    // Bottom: Standalone stylized "Settings" text centered under the accessories column
+    Item {
+        id: settingsBtn
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.panelPadding * 4
+        x: (root.settingsCenterX > 0) ? (root.settingsCenterX - width / 2) : (parent.width - width - Theme.panelPadding * 6)
+        width: settingsLabel.implicitWidth + 24
+        height: settingsLabel.implicitHeight + 12
 
         Text {
             id: settingsLabel
             anchors.centerIn: parent
             text: "Settings"
-            color: Theme.text
+            color: settingsArea.containsMouse ? Theme.highlight : Theme.text
             font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
+            font.pixelSize: Theme.fontSizeHeader
+            font.bold: true
+            style: Text.Outline
+            styleColor: "#11111b"
+
+            Behavior on color {
+                ColorAnimation { duration: 120 }
+            }
         }
 
         MouseArea {
+            id: settingsArea
             anchors.fill: parent
+            hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: root.requestSettings()
         }

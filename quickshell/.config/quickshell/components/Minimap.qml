@@ -12,9 +12,9 @@ Item {
         id: screenFrame
         anchors.fill: parent
         color: Theme.panel
-        border.color: Theme.panelBorder
-        border.width: Theme.borderWidth
-        radius: Theme.panelRadius
+        border.color: Theme.minimapBorder
+        border.width: 2
+        radius: 4
 
         Column {
             anchors.centerIn: parent
@@ -52,8 +52,8 @@ Item {
                     width: 14
                     height: 14
                     radius: 7
-                    color: Theme.buttonBackground
-                    border.color: Theme.panelBorder
+                    color: Theme.slotBackground
+                    border.color: Theme.minimapBorder
                     border.width: 1
 
                     Text {

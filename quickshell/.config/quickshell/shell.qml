@@ -73,7 +73,7 @@ ShellRoot {
             expanded: root.inventoryOpen
         }
 
-        // TOP-RIGHT: HUD Stack (Health/Mana Bar, Minimap, InfoPanel) - ~1/3 vertical height
+        // TOP-RIGHT: HUD Stack (Health/Mana Bar, Minimap, InfoPanel)
         Column {
             id: hudCol
             anchors.right: parent.right
@@ -84,15 +84,19 @@ ShellRoot {
             spacing: Theme.hudSpacing
 
             Hearts {
+                id: heartsHud
                 anchors.right: parent.right
             }
 
             Minimap {
+                id: minimapHud
                 anchors.right: parent.right
             }
 
             InfoPanel {
-                anchors.right: parent.right
+                id: infoPanelHud
+                anchors.left: minimapHud.left
+                anchors.leftMargin: 2
                 compact: root.inventoryOpen
             }
         }
@@ -102,19 +106,18 @@ ShellRoot {
             id: playerDemo
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.rightMargin: root.inventoryOpen ? (Theme.settingsRightMargin + 190) : 0
+            anchors.rightMargin: root.inventoryOpen ? (Theme.minimapWidth + Theme.panelPadding * 4) : 0
             anchors.bottom: parent.bottom
             height: Theme.groundHeight + Theme.playerHeight + 90
         }
 
-        // MID-TO-BOTTOM-RIGHT: 3x9 Accessories Grid (only visible when inventory is open)
-        // Positioned independently: ~1/2 vertical length, directly above Settings button
+        // RIGHT: 10-Row Equipment & Accessories Panel (only visible when inventory is open)
+        // Positioned directly below the Minimap, aligned flush right with Minimap
         AccessoryPanel {
             id: accessoryPanel
-            anchors.right: parent.right
-            anchors.rightMargin: Theme.settingsRightMargin
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: Theme.buttonHeight + Theme.panelPadding * 3 + Theme.spacing * 2
+            anchors.right: hudCol.right
+            anchors.top: hudCol.top
+            anchors.topMargin: heartsHud.height + minimapHud.height + Theme.hudSpacing + 28
             visible: root.inventoryOpen
         }
 
@@ -123,6 +126,7 @@ ShellRoot {
             id: inventoryOverlay
             anchors.fill: parent
             visible: root.inventoryOpen
+            settingsCenterX: accessoryPanel.x + accessoryPanel.slotsCenterX
             onRequestClose: root.inventoryOpen = false
             onRequestSettings: console.log("[TerrariaShell] Settings clicked")
         }
