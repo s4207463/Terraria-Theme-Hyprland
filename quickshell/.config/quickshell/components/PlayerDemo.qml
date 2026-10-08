@@ -10,9 +10,11 @@ Item {
     id: root
 
     property alias interactiveArea: interactiveArea
+    property alias playableArea: playableArea
     property alias groundStrip: groundStrip
     property alias characterItem: characterItem
     property alias guideBadge: guideBadge
+    property bool activeControl: false
 
     // Physics & Position state
     property real characterX: 120
@@ -133,19 +135,20 @@ Item {
         }
     }
 
-    // Reset movement on focus loss
+    // Reset key states on focus loss, but PRESERVE mouse navigation targetX
     onActiveFocusChanged: {
         if (!activeFocus) {
             root.keyLeft = false
             root.keyRight = false
             root.keyJump = false
-            root.targetX = -1
+            root.activeControl = false
         }
     }
 
     // Keyboard handlers
     Keys.onPressed: function(event) {
         if (event.key === Qt.Key_Escape) {
+            root.activeControl = false
             root.focus = false
             event.accepted = true
             return
@@ -182,6 +185,34 @@ Item {
         id: interactiveArea
         anchors.fill: parent
 
+        // 0. Full Playable interaction zone across the walking strip
+        Item {
+            id: playableArea
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            height: Theme.groundHeight + Theme.playerHeight + 25
+
+            // Primary Click-to-Walk and Jump interaction across entire walking zone
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                cursorShape: Qt.PointingHandCursor
+                onClicked: function(mouse) {
+                    if (mouse.button === Qt.RightButton) {
+                        if (root.onGround) {
+                            root.vy = root.jumpPower
+                            root.onGround = false
+                        }
+                    } else {
+                        root.targetX = mouse.x
+                    }
+                    root.activeControl = true
+                    root.forceActiveFocus()
+                }
+            }
+        }
+
         // 1. Ground strip with grass rim
         Rectangle {
             id: groundStrip
@@ -201,24 +232,6 @@ Item {
                 height: 4
                 color: Theme.groundTop
             }
-
-            // Click-to-walk and right-click-to-jump interaction
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                cursorShape: Qt.PointingHandCursor
-                onClicked: function(mouse) {
-                    if (mouse.button === Qt.RightButton) {
-                        if (root.onGround) {
-                            root.vy = root.jumpPower
-                            root.onGround = false
-                        }
-                    } else {
-                        root.targetX = mouse.x
-                    }
-                    root.forceActiveFocus()
-                }
-            }
         }
 
         // 2. Control Guide Badge
@@ -231,18 +244,21 @@ Item {
             implicitHeight: guideText.implicitHeight + Theme.panelPadding
             radius: Theme.panelRadius
             color: Theme.panel
-            border.color: Theme.panelBorder
+            border.color: root.activeControl ? Theme.highlight : Theme.panelBorder
             border.width: 1
-            opacity: guideHover.containsMouse ? 1.0 : 0.75
+            opacity: guideHover.containsMouse ? 1.0 : (root.activeControl ? 0.95 : 0.75)
             Behavior on opacity { NumberAnimation { duration: 150 } }
 
             Text {
                 id: guideText
                 anchors.centerIn: parent
-                text: "Player Demo: [A / D] Walk • [Space / W] Jump • Click Ground to Walk • Right-Click to Jump"
-                color: Theme.textDim
+                text: root.activeControl
+                    ? "🎮 [A / D] Walk • [Space] Jump • Click Ground to Move • [Esc] Release Focus"
+                    : "Player Demo: Click ground to walk or activate keyboard [A / D / Space]"
+                color: root.activeControl ? Theme.highlight : Theme.textDim
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeSmall - 2
+                font.bold: root.activeControl
             }
 
             MouseArea {
@@ -250,7 +266,10 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onClicked: root.forceActiveFocus()
+                onClicked: {
+                    root.activeControl = true
+                    root.forceActiveFocus()
+                }
             }
         }
 
@@ -277,6 +296,7 @@ Item {
                         root.vy = root.jumpPower
                         root.onGround = false
                     }
+                    root.activeControl = true
                     root.forceActiveFocus()
                 }
             }

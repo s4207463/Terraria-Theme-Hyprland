@@ -48,7 +48,9 @@ ShellRoot {
         visible: true
 
         WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+        WlrLayershell.keyboardFocus: (root.inventoryOpen || playerDemo.activeControl)
+            ? WlrKeyboardFocus.Exclusive
+            : WlrKeyboardFocus.None
 
         // Input mask: ONLY the interactive UI panels intercept clicks.
         // Transparent areas pass 100% of mouse clicks straight through to games/windows behind!
@@ -58,8 +60,7 @@ ShellRoot {
             Region { item: accessoryPanel }
             Region { item: inventoryOverlay.searchBarContainer }
             Region { item: inventoryOverlay.settingsBtn }
-            Region { item: playerDemo.groundStrip }
-            Region { item: playerDemo.characterItem }
+            Region { item: playerDemo.playableArea }
             Region { item: playerDemo.guideBadge }
         }
 
