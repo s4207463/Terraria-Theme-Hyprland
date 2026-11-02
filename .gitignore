@@ -1,5 +1,20 @@
-/IELTS_READY
-/index.html
-/Python_Stu_Journey
-/quant-forex-trading
-/YenThoRef
+# Terraria-Theme-Hyprland .gitignore
+
+# Reference screenshots (private Terraria design references, Rule A7/A4)
+reference/*
+!reference/.gitkeep
+
+# Environment and secrets (Rule A6)
+*.env
+*.secret
+*.pem
+*.key
+
+# Quickshell runtime logs and caches
+*.qslog
+.cache/
+
+# OS and editor artifacts
+.DS_Store
+*~
+*.swp
